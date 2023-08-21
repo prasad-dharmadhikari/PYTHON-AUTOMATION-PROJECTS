@@ -12,8 +12,18 @@ message = EmailMessage()
 message["From"] = sender
 message["Subject"] = subject
 message["To"] = sender
-message.set_content(body)
+#message.set_content(body)
 
+html = f"""
+    <html>
+        <body>
+            <h1>{subject}</h1>
+            <p>{body}</p> 
+        </body>
+    </html>
+"""
+
+message.add_alternative(html, subtype="html")
 context  = ssl.create_default_context()
 print("Sending email..............")
 with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
